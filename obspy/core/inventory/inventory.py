@@ -332,7 +332,7 @@ class Inventory(ComparingObject):
             raise Exception(msg)
         return responses[0]
 
-    def _get_channel_metadata(self, seed_id, datetime=None):
+    def get_channel_metadata(self, seed_id, datetime=None):
         """
         Return basic metadata for a given channel.
 
@@ -351,7 +351,7 @@ class Inventory(ComparingObject):
             if net.code != network:
                 continue
             try:
-                metadata.append(net._get_channel_metadata(seed_id, datetime))
+                metadata.append(net.get_channel_metadata(seed_id, datetime))
             except:
                 pass
         if len(metadata) > 1:
@@ -384,7 +384,7 @@ class Inventory(ComparingObject):
         :return: Dictionary containing coordinates (latitude, longitude,
             elevation, local_depth)
         """
-        metadata = self._get_channel_metadata(seed_id, datetime)
+        metadata = self.get_channel_metadata(seed_id, datetime)
         coordinates = {}
         for key in ['latitude', 'longitude', 'elevation', 'local_depth']:
             coordinates[key] = metadata[key]
@@ -408,7 +408,7 @@ class Inventory(ComparingObject):
         :rtype: dict
         :return: Dictionary containing orientation (azimuth, dip).
         """
-        metadata = self._get_channel_metadata(seed_id, datetime)
+        metadata = self.get_channel_metadata(seed_id, datetime)
         orientation = {}
         for key in ['azimuth', 'dip']:
             orientation[key] = metadata[key]
